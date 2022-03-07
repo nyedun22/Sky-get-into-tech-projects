@@ -1,5 +1,10 @@
 import random
 
+user_win = 0
+computer_win = 0
+games = 0
+print('3...2...1....Play!')
+
 
 # function to define user 'player 1' move
 def user_play():
@@ -18,7 +23,7 @@ def user_play():
 
 
 # automated random game play function for player 2
-def comp_play():
+def computer_play():
     choices = ['rock', 'paper', 'scissors']
     computer_choice = choices[random.randint(0, 2)]
     print(f'The computer played {computer_choice}')
@@ -26,31 +31,50 @@ def comp_play():
 
 
 # define function to continue playing rounds of the game
+
+
+# function to determine outcome of the game
+def game_play():
+    # use global to access variables from outside the func in this function
+    global user_win
+    global computer_win
+    global games
+    user = user_play()
+    computer = computer_play()
+
+    if user == computer:
+        print('Its a tie!')
+        games += 1
+    elif user == 'r' and computer == 'paper':
+        print('You lose, paper has wrapped up your rock!')
+        computer_win += 1
+        games += 1
+    elif user == 'p' and computer == 'scissors':
+        print('You lose, scissors have ripped through your paper')
+        computer_win += 1
+        games += 1
+    elif user == 's' and computer == 'rock':
+        print('You lose, the rock has smashed up your scissors')
+        computer_win += 1
+        games += 1
+    else:
+        print('Congratulations, You win!')
+        user_win += 1
+        games += 1
+    play_round()
+
+
+# function to continue playing rounds
 def play_round():
     rounds = input('Do you want to play again? y/n? \n')
     if rounds == 'y':
         game_play()
     else:
         print(f'Thanks for playing!')
+        print(f'You have won {user_win} and the computer has won {computer_win} out of {games} total games')
 
 
-# function to determine outcome of the game
-def game_play():
-    user = user_play()
-    comp = comp_play()
-
-    if user == comp:
-        print('Its a tie!')
-    elif user == 'r' and comp == 'paper':
-        print('You lose, paper has wrapped up your rock!')
-    elif user == 'p' and comp == 'scissors':
-        print('You lose, scissors have ripped through your paper')
-    elif user == 's' and comp == 'rock':
-        print('You lose, the rock has smashed up your scissors')
-    else:
-        print('Congratulations, You win!')
-# call function to continue playing rounds
-    play_round()
+game_play()
 
 
 game_play()
